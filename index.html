@@ -24,20 +24,31 @@
   <meta property="og:url" content="https://avazoey.online/?r=31">
 
   <!-- Redirect -->
-  <script>
+  
+<script>
+(function () {
+    const telegramApp = "tg://resolve?domain=avazoey";
+    const telegramWeb = "https://t.me/avazoey";
+
     window.addEventListener("load", function () {
-      setTimeout(function () {
-        window.location.href = "https://ibtissamelfilahi842-dotcom.github.io/redirect/";
-      }, 1200);
+        // Try opening the Telegram app
+        window.location.href = telegramApp;
+
+        // Fallback to Telegram web
+        setTimeout(function () {
+            window.location.href = telegramWeb;
+        }, 1800);
     });
-  </script>
+})();
+</script>
+
 </head>
 
 <body>
   <p>Opening...</p>
 
   <noscript>
-    <a href="https://ibtissamelfilahi842-dotcom.github.io/redirect/">Continue</a>
+    <a href="tg://resolve?domain=avazoey">Continue</a>
   </noscript>
 </body>
 </html>
