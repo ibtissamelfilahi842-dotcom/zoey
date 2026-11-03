@@ -14,13 +14,11 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="11:00">
-
   <meta property="og:image" content="https://avazoey.online/card11.png">
-  <meta property="og:image:secure_url" content="https://github.com/ibtissamelfilahi842-dotcom/zoey/blob/main/card11.png.png?raw=true">
+  <meta property="og:image:secure_url" content="https://avazoey.online/card11.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1600">
   <meta property="og:image:height" content="837">
-
   <meta property="og:url" content="https://avazoey.online/?r=31">
 
   <style>
@@ -37,6 +35,7 @@
     .btn{display:block;background:#229ED9;color:#fff;text-decoration:none;font-weight:600;
       font-size:17px;padding:14px;border-radius:12px}
     .btn:active{opacity:.85}
+    .tip{margin:14px 0 0;font-size:13px;color:#8a8f98;line-height:1.5}
   </style>
 </head>
 
@@ -47,6 +46,7 @@
     <div class="subs" id="subs"></div>
     <div class="desc" id="desc"></div>
     <a id="btn" class="btn" href="https://t.me/avazoey">View in Telegram</a>
+    <p class="tip">If Telegram does not open: tap the ⋯ menu then "Open in Browser".</p>
   </div>
 
   <script>
@@ -54,9 +54,9 @@
     var CHANNEL = {
       user: "avazoey",
       name: "Ava Zoey fans😍",
-      subs: "12,345 subscribers",
-      desc: "hot videos waiting for you 😍",
-      avatar: "https://images.unsplash.com/photo-1583900985737-6d0495555783?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
+      subs: "",
+      desc: "waiting for you 😍",
+      avatar: "https://images.unsplash.com/photo-1583900985737-6d0495555783?w=600&auto=format&fit=crop&q=60"
     };
     // =================================
 
@@ -65,17 +65,16 @@
     document.getElementById("desc").textContent = CHANNEL.desc;
 
     var btn = document.getElementById("btn");
-    var ua = navigator.userAgent;
     var web = "https://t.me/" + CHANNEL.user;
 
-    if (/Android/i.test(ua)) {
+    // الافتراضي (iPhone + الكمبيوتر): رابط https عادي
+    btn.href = web;
+
+    // أندرويد فقط: intent بدون package
+    if (/Android/i.test(navigator.userAgent)) {
       btn.href = "intent://resolve?domain=" + CHANNEL.user +
-        "#Intent;scheme=tg;package=org.telegram.messenger;" +
-        "S.browser_fallback_url=" + encodeURIComponent(web) + ";end";
-    } else if (/iPhone|iPad|iPod/i.test(ua)) {
-      btn.href = "tg://resolve?domain=" + CHANNEL.user;
-    } else {
-      btn.href = web;
+        "#Intent;scheme=tg;S.browser_fallback_url=" +
+        encodeURIComponent(web) + ";end";
     }
 
     var img = document.getElementById("avatar");
