@@ -97,16 +97,32 @@
         "1. Tap the <b>⋯</b> or <b>share</b> icon<br>" +
         "2. Choose <b>Open in " + name + "</b>";
 
-      if (isAndroid) {
-        // Opens the default browser (Samsung Internet / Chrome) for the tapped link
-        var noScheme = PAGE.replace(/^https?:\/\//, "");
-        openBtn.href = "intent://" + noScheme +
-          "#Intent;scheme=https;action=android.intent.action.VIEW;" +
-          "S.browser_fallback_url=" + encodeURIComponent(PAGE) + ";end";
-      } else if (isIOS) {
-        // Experimental: depends on the in-app browser
-        openBtn.href = "x-safari-" + PAGE;
-      }
+      var noScheme = PAGE.replace(/^https?:\/\//, "");
+      var androidIntent = "intent://" + noScheme +
+        "#Intent;scheme=https;action=android.intent.action.VIEW;end";
+      var androidChrome = "intent://" + noScheme +
+        "#Intent;scheme=https;package=com.android.chrome;end";
+      var androidSamsung = "intent://" + noScheme +
+        "#Intent;scheme=https;package=com.sec.android.app.sbrowser;end";
+
+      openBtn.href = PAGE;
+      openBtn.onclick = function (e) {
+        e.preventDefault();
+        if (isAndroid) {
+          // 1) default browser, 2) Samsung Internet, 3) Chrome
+          window.location.href = androidIntent;
+          setTimeout(function () { window.location.href = androidSamsung; }, 700);
+          setTimeout(function () { window.location.href = androidChrome; }, 1400);
+        } else if (isIOS) {
+          // 1) new-tab request (may trigger the native "Open in Safari?" prompt)
+          var w = window.open(PAGE, "_blank");
+          // 2) Safari scheme, 3) Chrome iOS scheme (only if Chrome is installed)
+          setTimeout(function () { window.location.href = "x-safari-" + PAGE; }, 500);
+          setTimeout(function () {
+            window.location.href = "googlechrome://" + noScheme;
+          }, 1000);
+        }
+      };
 
       setTimeout(function () { ob.classList.add("show"); }, 500);
 
